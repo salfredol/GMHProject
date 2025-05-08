@@ -100,6 +100,8 @@ public class Decision
                 case "tobacco":
                     GlobalData.TobaccoUseResult = currentNode.question;
                     break;
+                case "activity":
+                    GlobalData.ATResult = currentNode.question;
             }
             return;
         }

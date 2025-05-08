@@ -7,6 +7,11 @@ public class GlobalData
     public static int patientID;
     public static String patientName;
     
+    public static String ATResult = "";
+    
+    public static Decision ATQSet;
+    
+    //for student1 interviews
     public static String BloodTypeResult = "";
     public static String AlcoholUseResult = "";
     public static String DrugUseResult = "";

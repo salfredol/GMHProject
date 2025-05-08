@@ -5,6 +5,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultListModel;
 import javax.swing.*;
 import java.util.StringJoiner;
+import dbutils.*;
+import Trees.*;
 
 public class ActivityTolerance extends javax.swing.JFrame {
 
@@ -260,18 +262,15 @@ public class ActivityTolerance extends javax.swing.JFrame {
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panel_nav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbl_atid, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(95, 95, 95))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btn_retrievall, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addContainerGap())))
+                    .addComponent(lbl_atid, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btn_retrievall, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,7 +449,24 @@ public class ActivityTolerance extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_interviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_interviewActionPerformed
+        BuildTrees.BuildAllInterviewQuestionSets();
         
+        Decision activityTree = GlobalData.ATQSet;
+        activityTree.queryTree(activityTree.getRoot(), "activity");
+
+        if (!GlobalData.ATResult.isEmpty()) {
+            //"Understood, thank you for your time. Recorded: activity climb stairs, dectol 1, qty 10"
+            String[] parts = GlobalData.ATResult.split("Recorded:")[1].trim().split(",");
+
+            String activity = parts[0].replace("activity", "").trim(); 
+            String dectol = parts[1].replace("dectol", "").trim(); 
+            String qty = parts[2].replace("qty", "").trim(); 
+
+            txt_activity.setText(activity);
+            txt_dectolerance.setText(dectol);
+            txt_actqty.setText(qty);
+        }
+
     }//GEN-LAST:event_btn_interviewActionPerformed
 
     private void btn_toPSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_toPSActionPerformed
